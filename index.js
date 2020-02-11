@@ -10,7 +10,7 @@ const config = {
     /**
      * The base path for indexing, all files and subfolders are public by this tool. For example `/Share`.
      */
-    base: "/Share",
+    base: "/",
     /**
      * Feature Caching
      * Enable Cloudflare cache for path pattern listed below.
@@ -226,7 +226,7 @@ async function handleRequest(request) {
 
 
     if (thumbnail) {
-        const url = `https://graph.microsoft.com/v1.0/me/drive/root:${base+(pathname == "/" ? "" :pathname) }:/thumbnails/0/${thumbnail}/content`;
+        const url = `https://graph.microsoft.com/v1.0/me/drive/root:${pathname == "/" ? "" : pathname}:/thumbnails/0/${thumbnail}/content`;
         const resp = await fetch(url, {
             headers: {
                 "Authorization": `bearer ${accessToken}`
@@ -239,7 +239,7 @@ async function handleRequest(request) {
 
     }
 
-    const url = `https://graph.microsoft.com/v1.0/me/drive/root:${base+(pathname == "/" ? "" :pathname) }?select=name,eTag,size,id,folder,file,%40microsoft.graph.downloadUrl&expand=children(select%3Dname,eTag,size,id,folder,file)`;
+    const url = `https://graph.microsoft.com/v1.0/me/drive/root:${pathname == "/" ? "" : pathname}?select=name,eTag,size,id,folder,file,%40microsoft.graph.downloadUrl&expand=children(select%3Dname,eTag,size,id,folder,file)`;
     const resp = await fetch(url, {
         headers: {
             "Authorization": `bearer ${accessToken}`
